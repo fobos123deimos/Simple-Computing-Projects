@@ -43,12 +43,6 @@ Each notebook receives a unique code based on its main identifying fields. This 
 | `notebooks.dat` | Binary data file used to persist the notebook inventory between program executions.                                   |
 | `README.md`     | Project documentation.                                                                                                |
 
-If present, the file below may also be used:
-
-| File           | Description                                                                                       |
-| -------------- | ------------------------------------------------------------------------------------------------- |
-| `txt_to_dat.c` | Optional utility used to convert a text-based notebook list into the binary `notebooks.dat` file. |
-
 ---
 
 ## 📘 Computational Concepts
@@ -91,7 +85,7 @@ This structure stores a fixed-size array of notebooks and keeps track of the num
 
 The inventory is saved in a binary file:
 
-```c
+```text
 notebooks.dat
 ```
 
@@ -169,15 +163,6 @@ Notebook Inventory/
 ├── notebook.h
 ├── notebooks.dat
 └── README.md
-```
-
-Optional utility file:
-
-```text
-Notebook Inventory/
-│
-├── txt_to_dat.c
-└── notebooks_inventory_text.txt
 ```
 
 ---
@@ -259,56 +244,6 @@ Important:
 > `notebooks.dat` is a binary file. Do not manually edit it as plain text.
 
 If the structure definitions in `notebook.h` change, the old `.dat` file may become incompatible. In that case, delete the old file and let the program create a new one.
-
----
-
-## 🔄 Optional: Converting a Text File to `.dat`
-
-If a text inventory file is used, it should follow this format:
-
-```text
-brand;model;processor;storage;ram;screenSize;inputOutput;operatingSystem;price
-```
-
-Example:
-
-```text
-Samsung;GalaxyBookS;Snapdragon;256;8;13.3;USB-C;Windows;2500
-Dell;Inspiron15;i5;512;8;15.6;USB-A/USB-C;Windows;3200
-Lenovo;IdeaPad3;Ryzen5;512;8;15.6;USB-A/USB-C;Windows;3000
-```
-
-If the optional converter file exists, compile it separately:
-
-```bash
-gcc txt_to_dat.c -o txt_to_dat.exe
-```
-
-Then run:
-
-```bash
-./txt_to_dat.exe notebooks_inventory_text.txt notebooks.dat
-```
-
-Do not compile `main.c` and `txt_to_dat.c` together, because both files contain a `main()` function.
-
-Incorrect:
-
-```bash
-gcc main.c txt_to_dat.c -o program.exe
-```
-
-Correct:
-
-```bash
-gcc main.c -o notebook_inventory.exe
-```
-
-or:
-
-```bash
-gcc txt_to_dat.c -o txt_to_dat.exe
-```
 
 ---
 
