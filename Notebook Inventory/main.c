@@ -1,249 +1,310 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "notbook.h"
+#include <string.h>
 
-char menu()
+#include "notebook.h"
+
+#define STOCK_FILE "notebooks.dat"
+#define INPUT_SIZE 64
+
+/* Removes the trailing newline from a string read with fgets. */
+static void removeTrailingNewline(char *text)
 {
-    printf("***********************\n");
-    printf("* Estoque de Notbooks *\n");
-    printf("***********************\n\n");
-    printf("  1 - INSERIR Notbook\n");
-    printf("  2 - REMOVER Notbook\n");
-    printf("  3 - ALTERAR dados de um Notbook\n");
-    printf("  4 - CONSULTAR lista de Notbooks pelo PRECO\n");
-    printf("  5 - CONSULTAR lista de Notbooks pela MARCA\n");
-    printf("  6 - CONSULTAR lista de Notbooks pelo PROCESSADOR\n");
-    printf("  7 - CONSULTAR lista de Notbooks filtrada pela MARCA\n");
-    printf("  8 - CONSULTAR lista de Notbooks filtrada pelo PROCESSADOR\n");
-    printf("  0 - SAIR do aplicativo\n");
-    printf("\n  Escolha uma op%c%co: ",135,198);
-    return getchar();
+    size_t length = strlen(text);
 
+    if (length > 0 && text[length - 1] == '\n') {
+        text[length - 1] = '\0';
+    }
 }
 
-int main()
+/* Clears the remaining characters from stdin when the input is too long. */
+static void discardRemainingInput(void)
 {
-    struct listaNot lisNotbook;
-    lisNotbook.nco = 0;
-    struct Not notb;
-    int rb;
-    int alterado = 0;
-    char k = 'B';
-    char p = 'A';
-    char z[10];
-    char u[10];
-    FILE *fp;
-    fp = fopen("Notbooks.arq","rb");
-    if(fp != NULL)
-        fread(&lisNotbook,sizeof(struct listaNot),1,fp);
-    fclose(fp);
-    while(k == '0','1','2','3','4','5','6','7','8')
-    {
-        k = menu();
-        switch(k)
-        {
-            lb();
+    int character;
+
+    while ((character = getchar()) != '\n' && character != EOF) {
+        /* Discard characters until the end of the line. */
+    }
+}
+
+/* Reads one line of text safely. */
+static int readLine(const char *prompt, char *buffer, size_t bufferSize)
+{
+    if (prompt != NULL) {
+        printf("%s", prompt);
+    }
+
+    if (fgets(buffer, bufferSize, stdin) == NULL) {
+        return 0;
+    }
+
+    if (strchr(buffer, '\n') == NULL) {
+        discardRemainingInput();
+    }
+
+    removeTrailingNewline(buffer);
+
+    return 1;
+}
+
+/* Reads a yes/no answer and returns 1 for yes, 0 for no. */
+static int askYesNo(const char *prompt)
+{
+    char answer[INPUT_SIZE];
+
+    while (1) {
+        if (!readLine(prompt, answer, sizeof(answer))) {
+            return 0;
+        }
+
+        if (answer[0] == 'y' || answer[0] == 'Y') {
+            return 1;
+        }
+
+        if (answer[0] == 'n' || answer[0] == 'N') {
+            return 0;
+        }
+
+        printf("\n**** Please enter Y or N ****\n\n");
+    }
+}
+
+/* Shows the main menu and returns the selected option. */
+char showMenu(void)
+{
+    char option[INPUT_SIZE];
+
+    printf("**********************\n");
+    printf("* Notebook Inventory *\n");
+    printf("**********************\n\n");
+
+    printf("  1 - INSERT notebook\n");
+    printf("  2 - REMOVE notebook\n");
+    printf("  3 - UPDATE notebook data\n");
+    printf("  4 - SHOW notebook list sorted by PRICE\n");
+    printf("  5 - SHOW notebook list sorted by BRAND\n");
+    printf("  6 - SHOW notebook list sorted by PROCESSOR\n");
+    printf("  7 - SHOW notebook list filtered by BRAND\n");
+    printf("  8 - SHOW notebook list filtered by PROCESSOR\n");
+    printf("  0 - EXIT application\n");
+
+    readLine("\n  Choose an option: ", option, sizeof(option));
+
+    return option[0];
+}
+
+/* Loads the notebook inventory from a binary file. */
+static void loadInventory(struct NotebookList *notebookList)
+{
+    FILE *file;
+
+    if (notebookList == NULL) {
+        return;
+    }
+
+    initializeList(notebookList);
+
+    file = fopen(STOCK_FILE, "rb");
+
+    if (file == NULL) {
+        return;
+    }
+
+    if (fread(notebookList, sizeof(struct NotebookList), 1, file) != 1) {
+        initializeList(notebookList);
+    }
+
+    fclose(file);
+
+    if (notebookList->count > MAX) {
+        notebookList->count = MAX;
+    }
+}
+
+/* Saves the notebook inventory to a binary file. */
+static int saveInventory(struct NotebookList *notebookList)
+{
+    FILE *file;
+
+    if (notebookList == NULL) {
+        printf("\nInvalid notebook list.\n");
+        return 0;
+    }
+
+    file = fopen(STOCK_FILE, "wb");
+
+    if (file == NULL) {
+        printf("\nCould not open the inventory file for writing.\n");
+        return 0;
+    }
+
+    if (fwrite(notebookList, sizeof(struct NotebookList), 1, file) != 1) {
+        printf("\nCould not save the inventory file.\n");
+        fclose(file);
+        return 0;
+    }
+
+    fclose(file);
+
+    printf("\n**** The inventory file was saved successfully ****\n");
+
+    return 1;
+}
+
+/* Prints a sorted copy of the notebook list without changing the original list. */
+static void printSortedNotebookList(struct NotebookList *notebookList,
+                                    int (*comparisonFunction)(const void *, const void *))
+{
+    struct NotebookList sortedList;
+
+    if (notebookList == NULL) {
+        printf("\nInvalid notebook list.\n");
+        return;
+    }
+
+    if (notebookList->count < 2) {
+        printf("\nAt least two notebooks are required to sort the list.\n\n");
+        return;
+    }
+
+    sortedList = *notebookList;
+
+    qsort(sortedList.items,
+          sortedList.count,
+          sizeof(struct Notebook),
+          comparisonFunction);
+
+    printNotebookList(&sortedList);
+}
+
+int main(void)
+{
+    struct NotebookList notebookList;
+    struct Notebook notebook;
+    int foundIndex;
+    int inventoryChanged = 0;
+    char option;
+    char code[CODE_SIZE];
+    char brand[INPUT_SIZE];
+    char processor[INPUT_SIZE];
+    unsigned previousCount;
+
+    loadInventory(&notebookList);
+
+    do {
+        option = showMenu();
+
+        switch (option) {
             case '1':
-                    lb();
-                    AdicionarNotbook(&lisNotbook,notb);
-                    while(p!='s' && p!='S' && p!='n' && p!='N')
-                    {
-                        printf("\n  Salvar Notbook? (s/n): ");
-                        p = getchar();
-                        if(p=='S' || p=='s')
-                        {
-                            printf("\n\n  **** Notbook Inserido ****\n\n");
-                            alterado = 1;
-                            lb();
-                        }
-                        if(p == 'n' || p == 'N')
-                        {
-                            printf("\n\n");
-                            lb();
-                        }
+                previousCount = notebookList.count;
 
-                        if(p!='N' && p!='n'&& p!='s' && p!= 'S')
-                        {
-                            printf("\n\n**** Pressione S ou N ****\n\n");
-                            lb();
-                        }
+                addNotebook(&notebookList, notebook);
 
-                    }
-                    p = 'A';
-                    break;
+                if (notebookList.count > previousCount) {
+                    inventoryChanged = 1;
+                }
+
+                break;
+
             case '2':
-                lb();
-                printf("\n\n**** Remover Notbook ****\n\n");
-                printf("Digite o Codec do Notbook: ");
-                gets(notb.codec);
-                rb = buscaNot(&lisNotbook,notb.codec);
-                if(rb < 0)
-                {
-                   printf("\n\n**** Notbook inexistente ****\n\n");
-                }
+                printf("\n\n**** Remove Notebook ****\n\n");
 
-                else
-                {
-                     while(p!='s' && p!='S' && p!='n' && p!='N')
-                    {
-                        printf("\n\nExcluir %s e salvar? (s/n):  ",notb.codec);
-                        p = getchar();
-                        if(p=='S' || p=='s')
-                        {   removeNot(&lisNotbook,notb.codec);
-                            printf("\n\n**** Notbook Excluido ****\n\n");
-                            alterado = 1;
-                            lb();
-                        }
-                        if(p == 'N',p == 'n')
-                        {
-                            printf("\n\n");
-                            lb();
-                        }
+                readLine("Enter the notebook code: ", code, sizeof(code));
 
-                        if(p!='N' && p!='n'&& p!='s' && p!= 'S')
-                        {
-                            printf("\n\n  **** Pressione S ou N ****\n\n");
-                            lb();
-                        }
+                foundIndex = findNotebookByCode(&notebookList, code);
+
+                if (foundIndex < 0) {
+                    printf("\n\n**** Notebook does not exist ****\n\n");
+                } else {
+                    char confirmationPrompt[INPUT_SIZE];
+
+                    snprintf(confirmationPrompt,
+                             sizeof(confirmationPrompt),
+                             "\nDelete notebook %s? (y/n): ",
+                             code);
+
+                    if (askYesNo(confirmationPrompt)) {
+                        removeNotebook(&notebookList, code);
+                        printf("\n\n**** Notebook removed ****\n\n");
+                        inventoryChanged = 1;
                     }
                 }
-                p = 'A';
+
                 break;
 
             case '3':
-                lb();
-                printf("\n\n**** Modificar Notbook ****\n\n");
-                printf("Digite o Codec do Notbook: ");
-                gets(notb.codec);
-                rb = buscaNot(&lisNotbook,notb.codec);
-                if(rb < 0)
-                {
-                    printf("\n\n**** Notbook  Ineexistente ****\n\n");
-                }
-                else
-                {
-                    while(p!='s' && p!='S' && p!='n' && p!='N')
-                    {
-                        printf("\n\nModificar %s e salvar? (s/n):  ",notb.codec);
-                        p = getchar();
-                        if(p=='S' || p=='s')
-                        {   lb();
-                            mudaNot(&lisNotbook,notb.codec);
-                            printf("\n\n**** Dados de Notbook Modificados ****\n\n");
-                            alterado = 1;
-                            lb();
-                        }
-                        if(p == 'N' && p == 'n')
-                        {
-                            printf("\n\n");
-                            lb();
-                        }
-                        if(p!='N' && p!='n'&& p!='s' && p!= 'S')
-                        {
-                            printf("\n\n**** Pressione S ou N ****\n\n");
-                            lb();
-                        }
+                printf("\n\n**** Update Notebook ****\n\n");
+
+                readLine("Enter the notebook code: ", code, sizeof(code));
+
+                foundIndex = findNotebookByCode(&notebookList, code);
+
+                if (foundIndex < 0) {
+                    printf("\n\n**** Notebook does not exist ****\n\n");
+                } else {
+                    char confirmationPrompt[INPUT_SIZE];
+
+                    snprintf(confirmationPrompt,
+                             sizeof(confirmationPrompt),
+                             "\nUpdate notebook %s? (y/n): ",
+                             code);
+
+                    if (askYesNo(confirmationPrompt)) {
+                        updateNotebook(&notebookList, code);
+                        printf("\n\n**** Notebook data updated ****\n\n");
+                        inventoryChanged = 1;
                     }
                 }
-                p = 'A';
+
                 break;
 
             case '4':
-                if(lisNotbook.nco < 2)
-                {
-                    printf("\n\nE necessario pelo menos dois Notbooks para se ordenar a lista\n\n");
-                    lb();
-                    break;
-                }
-                else
-                {
-                    lb();
-                    qsort(lisNotbook.Notb,lisNotbook.nco,sizeof(struct Not),ordenaPreco);
-                    mostreLN(&lisNotbook);
-                    break;
-                }
-            case '5':
-                if(lisNotbook.nco < 2)
-                {
-                    printf("\n\nE necessario pelo menos dois Notbooks para se ordenar a lista\n\n");
-                    lb();
-                    break;
-                }
-                else
-                {
-                    lb();
-                    qsort(lisNotbook.Notb,lisNotbook.nco,sizeof(struct Not),ordenaMarca);
-                    mostreLN(&lisNotbook);
-                    break;
-                }
-            case '6':
-                if(lisNotbook.nco < 2)
-                {
-                    printf("\n\nE necessario pelo menos dois Notbooks para se ordenar a lista\n\n");
-                    lb();
-                    break;
-                }
-                else
-                {
-                    lb();
-                    qsort(lisNotbook.Notb,lisNotbook.nco,sizeof(struct Not),ordenaPro);
-                    mostreLN(&lisNotbook);
-                    break;
-                }
-            case '7':
-                lb();
-                printf("\n\n--- Digite o nome da Marca do Notbook ---\n\n");
-                printf("Marca:  ");
-                scanf("%s",u);
-                mostFilterM(&lisNotbook,u);
-                lb();
+                printSortedNotebookList(&notebookList, compareByPrice);
                 break;
-            case '8':
-                lb();
-                printf("\n\n--- Digite o nome da Processador do Notbook ---\n\n");
-                printf("Processador:  ");
-                scanf("%s",z);
-                mostFilterP(&lisNotbook,z);
-                lb();
-                break;
-            case '0':
-                 lb();
-                 if(alterado)
-                {
-                    printf("\n\nArquivo alterado. Deseja salvar as altera%c%ces? (s/n): ",135,228);
-                    p = getchar();
-                    if(p=='S' || p=='s')
-                    {
-                        fp = fopen("Notbooks.arq","wb");
-                        fwrite(&lisNotbook,sizeof(struct listaNot),1,fp);
-                        fclose(fp);
-                        printf("\n  **** O arquivo foi salvo ****\n");
-                        return 0;
-                    }
-                    if(p=='N'|| p=='n')
-                    {
-                        return 0;
-                    }
-                     if(p!='N' && p!='n'&& p!='s' && p!= 'S')
-                     {
-                        printf("\n\n**** Pressione S ou N ****\n\n");
-                        lb();
-                    }
 
+            case '5':
+                printSortedNotebookList(&notebookList, compareByBrand);
+                break;
+
+            case '6':
+                printSortedNotebookList(&notebookList, compareByProcessor);
+                break;
+
+            case '7':
+                printf("\n\n--- Enter the notebook brand ---\n\n");
+
+                readLine("Brand: ", brand, sizeof(brand));
+
+                printNotebooksByBrand(&notebookList, brand);
+                break;
+
+            case '8':
+                printf("\n\n--- Enter the notebook processor ---\n\n");
+
+                readLine("Processor: ", processor, sizeof(processor));
+
+                printNotebooksByProcessor(&notebookList, processor);
+                break;
+
+            case '0':
+                if (inventoryChanged) {
+                    if (askYesNo("\nInventory changed. Do you want to save the changes? (y/n): ")) {
+                        saveInventory(&notebookList);
+                    } else {
+                        printf("\nChanges were not saved.\n");
+                    }
                 }
-                else
-                {
-                    return 0;
-                }
+
+                break;
 
             default:
-                lb();
-                printf("\n\n**** Entrada invalida ****\n\n");
+                printf("\n\n**** Invalid input ****\n\n");
                 break;
         }
-    }
+
+    } while (option != '0');
 
     printf("\n");
-    return 0;
 
+    return 0;
 }
