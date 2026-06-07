@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Union
 
-from fixed_capacity_stack import FixedCapacityStack
+from stacks.fixed_capacity_stack import FixedCapacityStack
 
 
 Token = Union[float, str]

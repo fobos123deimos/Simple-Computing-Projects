@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "fixed_long_double_stack.h"
+#include "../stacks/fixed_long_double_stack.h"
 
 #define INPUT_BUFFER_SIZE 256
 

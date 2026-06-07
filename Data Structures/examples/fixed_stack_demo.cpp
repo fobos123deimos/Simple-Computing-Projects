@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "fixed_capacity_stack.hpp"
+#include "../stacks/fixed_capacity_stack.hpp"
 
 /*
     Prints and removes all elements from an integer stack.

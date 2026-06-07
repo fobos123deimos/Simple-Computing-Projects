@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include "linked_queue.hpp"
+#include "../queues/linked_queue.hpp"
 
 /*
     Reads a positive integer from the user.

@@ -1,5 +1,5 @@
-#include "adjacency_list_graph.hpp"
-#include "linked_queue.hpp"
+#include "../graphs/adjacency_list_graph.hpp"
+#include "../queues/linked_queue.hpp"
 
 #include <iostream>
 #include <vector>

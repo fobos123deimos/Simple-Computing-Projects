@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#include "fixed_capacity_stack.hpp"
+#include "../stacks/fixed_capacity_stack.hpp"
 
 /*
     Applies an arithmetic operator to two operands.

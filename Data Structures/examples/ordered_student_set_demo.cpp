@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "ordered_dynamic_set.hpp"
+#include "../sets/ordered_dynamic_set.hpp"
 
 /*
     Student

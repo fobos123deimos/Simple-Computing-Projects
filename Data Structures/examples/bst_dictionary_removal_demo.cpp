@@ -1,4 +1,4 @@
-#include "bst_dictionary.hpp"
+#include "../trees/bst_dictionary.hpp"
 
 #include <iomanip>
 #include <iostream>
