@@ -111,7 +111,7 @@ data_structures/
 
 The repository separates **reusable structures** from **example programs**.
 
-Files such as:
+Reusable structure files include:
 
 ```text
 fixed_capacity_stack.hpp
@@ -120,9 +120,7 @@ bst_dictionary.hpp
 adjacency_list_graph.hpp
 ```
 
-are reusable data structure implementations.
-
-Files such as:
+Example programs include:
 
 ```text
 fixed_stack_demo.cpp
@@ -130,8 +128,6 @@ graph_bfs_distances.cpp
 topological_sort.cpp
 ordered_student_set_demo.cpp
 ```
-
-are example programs that use those structures to solve small computational problems.
 
 ---
 
@@ -214,11 +210,15 @@ Last In, First Out
 
 The last element inserted is the first one removed.
 
-```mermaid
-flowchart TB
-    A["Top → 30"] --> B["20"]
-    B --> C["10"]
-    C --> D["Bottom"]
+```text
+        ┌─────┐
+Top ──> │  30 │
+        ├─────┤
+        │  20 │
+        ├─────┤
+        │  10 │
+        └─────┘
+        Bottom
 ```
 
 In this repository, stacks appear in different forms:
@@ -255,9 +255,13 @@ First In, First Out
 
 The first element inserted is the first one removed.
 
-```mermaid
-flowchart LR
-    A["Front"] --> B["10"] --> C["20"] --> D["30"] --> E["Back"]
+```text
+Front                              Back
+  │                                  │
+  v                                  v
+┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐
+│  10 │ -> │  20 │ -> │  30 │ -> │  40 │
+└─────┘    └─────┘    └─────┘    └─────┘
 ```
 
 In this repository:
@@ -285,9 +289,13 @@ The circular queue is more memory-local and efficient, while the linked queue gr
 
 A **deque**, or double-ended queue, allows insertion and removal from both ends.
 
-```mermaid
-flowchart LR
-    A["Front"] <--> B["10"] <--> C["20"] <--> D["30"] <--> E["Back"]
+```text
+Front                              Back
+  │                                  │
+  v                                  v
+┌─────┐ <-> ┌─────┐ <-> ┌─────┐ <-> ┌─────┐
+│  10 │     │  20 │     │  30 │     │  40 │
+└─────┘ <-> └─────┘ <-> └─────┘ <-> └─────┘
 ```
 
 In this repository:
@@ -317,12 +325,13 @@ A deque is useful when elements must be processed from both ends, such as in sli
 
 A **set** stores unique elements. The main idea is that repeated values or repeated keys should not be inserted.
 
-```mermaid
-flowchart LR
-    A["Set"] --> B["123456"]
-    A --> C["282956"]
-    A --> D["345678"]
-    A --> E["396436"]
+```text
+Set
+│
+├── 123456
+├── 282956
+├── 345678
+└── 396436
 ```
 
 In this repository:
@@ -354,22 +363,14 @@ A **binary search tree**, or BST, stores keys following this rule:
 left key < current key < right key
 ```
 
-```mermaid
-flowchart TB
-    D["d: 6.23"]
-    B["b: 4.56"]
-    F["f: 7.80"]
-    A["a: 10.00"]
-    C["c: 6.70"]
-    E["e: 3.56"]
-    G["g: 7.89"]
+Example:
 
-    D --> B
-    D --> F
-    B --> A
-    B --> C
-    F --> E
-    F --> G
+```text
+              d: 6.23
+             /       \
+       b: 4.56       f: 7.80
+       /    \         /    \
+a: 10.00  c: 6.70  e: 3.56  g: 7.89
 ```
 
 In this repository:
@@ -391,14 +392,18 @@ In this repository:
 
 The worst case happens when the tree becomes unbalanced, almost like a linked list.
 
-Example:
+Example of a degenerated BST:
 
-```mermaid
-flowchart TB
-    A["1"] --> B["2"]
-    B --> C["3"]
-    C --> D["4"]
-    D --> E["5"]
+```text
+1
+ \
+  2
+   \
+    3
+     \
+      4
+       \
+        5
 ```
 
 In this case, searching becomes O(n).
@@ -409,22 +414,12 @@ In this case, searching becomes O(n).
 
 An **AVL tree** is a self-balancing binary search tree. It keeps the height difference between left and right subtrees controlled.
 
-```mermaid
-flowchart TB
-    B["30"]
-    A["20"]
-    C["40"]
-    D["10"]
-    E["25"]
-    F["35"]
-    G["50"]
-
-    B --> A
-    B --> C
-    A --> D
-    A --> E
-    C --> F
-    C --> G
+```text
+              30
+            /    \
+          20      40
+         /  \    /  \
+       10   25  35   50
 ```
 
 In this repository:
@@ -455,12 +450,11 @@ A **graph** stores relationships between vertices.
 
 In this project, the graph is represented using an **adjacency list**.
 
-```mermaid
-flowchart LR
-    A["0"] --> B["1"]
-    A --> C["2"]
-    B --> D["3"]
-    C --> D
+```text
+0 ──> 1 ──> 3
+│           ^
+│           │
+└──> 2 ─────┘
 ```
 
 In this repository:
@@ -486,16 +480,14 @@ The reusable graph structure uses **adjacency lists**, which are usually better 
 
 **BFS** visits vertices level by level using a queue.
 
-```mermaid
-flowchart TB
-    A["Source: 0"]
-    B["Distance 1: 1, 2"]
-    C["Distance 2: 3, 4"]
-    D["Distance 3: 5"]
+```text
+Source: 0
 
-    A --> B
-    B --> C
-    C --> D
+Distance 0:        0
+                  / \
+Distance 1:      1   2
+                / \   \
+Distance 2:    3   4   5
 ```
 
 ### BFS Complexity
@@ -514,12 +506,11 @@ BFS is useful for finding the shortest number of edges between a source vertex a
 
 Topological sorting orders vertices of a directed acyclic graph so that every dependency appears before the element that depends on it.
 
-```mermaid
-flowchart LR
-    A["0"] --> B["1"]
-    A --> C["2"]
-    B --> D["3"]
-    C --> D
+```text
+0 ──> 1 ──> 3
+│           ^
+│           │
+└──> 2 ─────┘
 ```
 
 One valid topological order is:
@@ -527,13 +518,6 @@ One valid topological order is:
 ```text
 0 → 1 → 2 → 3
 ```
-
-### Topological Sort Complexity
-
-| Operation | Complexity |
-| --------- | ---------: |
-| Time      |   O(V + E) |
-| Space     |       O(V) |
 
 Topological sorting is useful for:
 
@@ -543,6 +527,13 @@ dependency resolution
 course prerequisites
 build systems
 ```
+
+### Topological Sort Complexity
+
+| Operation | Complexity |
+| --------- | ---------: |
+| Time      |   O(V + E) |
+| Space     |       O(V) |
 
 ---
 
@@ -563,14 +554,18 @@ one stack for numbers
 one stack for operators
 ```
 
-```mermaid
-flowchart LR
-    A["Read token"] --> B{"Token type?"}
-    B --> C["Number → push into number stack"]
-    B --> D["Operator → push into operator stack"]
-    B --> E[") → pop two numbers and one operator"]
-    E --> F["Compute partial result"]
-    F --> G["Push result back"]
+Simplified flow:
+
+```text
+Read token
+   │
+   ├── Number   ──> push into number stack
+   │
+   ├── Operator ──> push into operator stack
+   │
+   └── ")"      ──> pop two numbers and one operator
+                    compute partial result
+                    push result back
 ```
 
 ### Expression Evaluator Complexity
@@ -600,81 +595,141 @@ Where `n` is the number of characters or tokens in the expression.
 
 ---
 
-## ▶️ How to Compile C++ Examples
+## ▶️ How to Run the Examples
 
-From the `data_structures/` folder, examples can be compiled with `g++`.
+Run the commands from the root folder:
 
-Example:
-
-```bash
-g++ -std=c++17 examples/fixed_stack_demo.cpp -I stacks -o fixed_stack_demo
+```text
+data_structures/
 ```
 
-Then run:
+---
+
+### C++ Examples
+
+#### `fixed_stack_demo.cpp`
 
 ```bash
+g++ -std=c++17 examples/fixed_stack_demo.cpp -o fixed_stack_demo
 ./fixed_stack_demo
 ```
 
-On Windows PowerShell:
+Windows PowerShell:
 
-```bash
+```powershell
+g++ -std=c++17 examples/fixed_stack_demo.cpp -o fixed_stack_demo.exe
 .\fixed_stack_demo.exe
 ```
 
-Another example:
+#### `arithmetic_expression_evaluator.cpp`
 
 ```bash
-g++ -std=c++17 examples/topological_sort.cpp -I graphs -I queues -o topological_sort
+g++ -std=c++17 examples/arithmetic_expression_evaluator.cpp -o arithmetic_expression_evaluator
+./arithmetic_expression_evaluator
 ```
 
-Then run:
+Windows PowerShell:
+
+```powershell
+g++ -std=c++17 examples/arithmetic_expression_evaluator.cpp -o arithmetic_expression_evaluator.exe
+.\arithmetic_expression_evaluator.exe
+```
+
+#### `ordered_student_set_demo.cpp`
 
 ```bash
+g++ -std=c++17 examples/ordered_student_set_demo.cpp -o ordered_student_set_demo
+./ordered_student_set_demo
+```
+
+Windows PowerShell:
+
+```powershell
+g++ -std=c++17 examples/ordered_student_set_demo.cpp -o ordered_student_set_demo.exe
+.\ordered_student_set_demo.exe
+```
+
+#### `bst_dictionary_removal_demo.cpp`
+
+```bash
+g++ -std=c++17 examples/bst_dictionary_removal_demo.cpp -o bst_dictionary_removal_demo
+./bst_dictionary_removal_demo
+```
+
+Windows PowerShell:
+
+```powershell
+g++ -std=c++17 examples/bst_dictionary_removal_demo.cpp -o bst_dictionary_removal_demo.exe
+.\bst_dictionary_removal_demo.exe
+```
+
+#### `graph_bfs_distances.cpp`
+
+```bash
+g++ -std=c++17 examples/graph_bfs_distances.cpp -o graph_bfs_distances
+./graph_bfs_distances
+```
+
+Windows PowerShell:
+
+```powershell
+g++ -std=c++17 examples/graph_bfs_distances.cpp -o graph_bfs_distances.exe
+.\graph_bfs_distances.exe
+```
+
+#### `topological_sort.cpp`
+
+```bash
+g++ -std=c++17 examples/topological_sort.cpp -o topological_sort
 ./topological_sort
 ```
 
-On Windows PowerShell:
+Windows PowerShell:
 
-```bash
+```powershell
+g++ -std=c++17 examples/topological_sort.cpp -o topological_sort.exe
 .\topological_sort.exe
 ```
 
 ---
 
-## ▶️ How to Compile C Examples
+### C Examples
 
-Example:
-
-```bash
-gcc examples/parenthesized_calculator.c -I stacks -o parenthesized_calculator
-```
-
-Then run:
+#### `parenthesized_calculator.c`
 
 ```bash
+gcc examples/parenthesized_calculator.c -o parenthesized_calculator
 ./parenthesized_calculator
 ```
 
-On Windows PowerShell:
+Windows PowerShell:
 
-```bash
+```powershell
+gcc examples/parenthesized_calculator.c -o parenthesized_calculator.exe
 .\parenthesized_calculator.exe
 ```
 
 ---
 
-## ▶️ How to Run Python Examples
+### Python Examples
 
-Example:
+#### `parenthesized_expression_evaluator.py`
+
+Linux/macOS:
 
 ```bash
 python examples/parenthesized_expression_evaluator.py
 ```
 
-On Windows, you can also use:
+Windows PowerShell:
 
-```bash
+```powershell
+python examples/parenthesized_expression_evaluator.py
+```
+
+Alternative on Windows:
+
+```powershell
 py examples/parenthesized_expression_evaluator.py
 ```
 
@@ -717,7 +772,7 @@ trees/
 graphs/
 ```
 
-These files are intended to be included and reused by other programs.
+These files are intended to be reused by other programs.
 
 ### Example Programs
 
@@ -741,7 +796,6 @@ Possible improvements include:
 * Add hash table implementation.
 * Add heap and priority queue.
 * Add comments comparing time complexity inside each source file.
-* Add diagrams for stacks, queues, trees, and graphs.
 * Add automated GitHub Actions builds.
 * Separate C, C++, and Python examples into language-specific folders.
 * Add memory leak checks with tools such as Valgrind.
@@ -780,6 +834,62 @@ graph representation
 algorithmic thinking
 algorithmic complexity
 ```
+
+## 📚 References and Further Reading
+
+The following books and online resources are useful for studying data structures, algorithms, complexity analysis, and implementation details.
+
+---
+
+### Books
+
+| Reference                                                                                                 | Why it is useful                                                                                                                     |
+| --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Introduction to Algorithms** — Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein | One of the most complete references for algorithms, asymptotic analysis, trees, graphs, sorting, searching, and dynamic programming. |
+| **Algorithms, 4th Edition** — Robert Sedgewick, Kevin Wayne                                               | A clear and practical book covering fundamental algorithms and data structures, with strong examples and visual explanations.        |
+| **Data Structures and Algorithm Analysis in C++** — Mark Allen Weiss                                      | Very useful for learning data structures directly in C++, including lists, stacks, queues, trees, heaps, hash tables, and graphs.    |
+| **Data Structures and Algorithms in C++** — Michael T. Goodrich, Roberto Tamassia, David M. Mount         | Good academic reference for object-oriented implementations of classic data structures in C++.                                       |
+| **The C Programming Language** — Brian W. Kernighan, Dennis M. Ritchie                                    | Essential reference for C syntax, pointers, arrays, memory behavior, and low-level programming style.                                |
+| **C++ Primer** — Stanley B. Lippman, Josée Lajoie, Barbara E. Moo                                         | Strong reference for modern C++ fundamentals, including templates, classes, memory management, and the standard library.             |
+| **Problem Solving with Algorithms and Data Structures Using Python** — Bradley N. Miller, David L. Ranum  | Good introductory resource for studying data structures and algorithms with Python.                                                  |
+| **Open Data Structures** — Pat Morin                                                                      | Free open textbook covering lists, stacks, queues, hash tables, trees, heaps, graphs, and complexity analysis.                       |
+
+---
+
+### Online Resources
+
+| Resource                                 | Link                                                                                                                            | Why it is useful                                                                                           |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| MIT Press — *Introduction to Algorithms* | [mitpress.mit.edu/9780262046305/introduction-to-algorithms](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/) | Official page for the CLRS textbook.                                                                       |
+| Algorithms, 4th Edition — Princeton      | [algs4.cs.princeton.edu](https://algs4.cs.princeton.edu/)                                                                       | Official companion site for Sedgewick and Wayne’s algorithms book.                                         |
+| Open Data Structures                     | [opendatastructures.org](https://opendatastructures.org/)                                                                       | Free book and source code for data structures in multiple languages.                                       |
+| VisuAlgo                                 | [visualgo.net](https://visualgo.net/)                                                                                           | Interactive visualizations for stacks, queues, linked lists, trees, graphs, sorting, and graph algorithms. |
+| CP-Algorithms                            | [cp-algorithms.com](https://cp-algorithms.com/)                                                                                 | Practical explanations of algorithms and data structures, especially useful for competitive programming.   |
+| cppreference — Containers Library        | [en.cppreference.com/w/cpp/container](https://en.cppreference.com/w/cpp/container)                                              | Reference for C++ standard containers such as `vector`, `deque`, `set`, `map`, `stack`, and `queue`.       |
+| GeeksforGeeks — Data Structures          | [geeksforgeeks.org/dsa](https://www.geeksforgeeks.org/dsa/dsa-tutorial-learn-data-structures-and-algorithms/)                   | Large collection of tutorials and examples for common data structures and algorithms.                      |
+| Khan Academy — Algorithms                | [khanacademy.org/computing/computer-science/algorithms](https://www.khanacademy.org/computing/computer-science/algorithms)      | Beginner-friendly explanations of algorithmic thinking and complexity.                                     |
+
+---
+
+### Suggested Study Path
+
+A good study order for this repository is:
+
+```text
+1. Stack
+2. Queue
+3. Deque
+4. Linked List based Sets
+5. Ordered Dynamic Set
+6. Binary Search Tree
+7. AVL Tree
+8. Graph Representation
+9. Breadth-First Search
+10. Topological Sorting
+11. Expression Evaluation with Stacks
+```
+
+This order starts with simpler linear structures and gradually moves toward hierarchical and relational structures.
 
 ---
 
