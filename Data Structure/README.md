@@ -1,1 +1,0 @@
-# Cotém Várias Estruturas de Dados, inclusive uma Árvore AVL 
