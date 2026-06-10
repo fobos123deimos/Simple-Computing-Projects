@@ -82,38 +82,38 @@ Image source: [Wikimedia Commons — Graph for example adjacency matrix.svg](htt
 
 ```mermaid
 graph TD
-    A[Data Structures Collection] --> B[Stacks]
-    A --> C[Queues]
-    A --> D[Deques]
-    A --> E[Sets]
-    A --> F[Trees]
-    A --> G[Graphs]
-    A --> H[Examples]
+    ds_root["Data Structures Collection"] --> ds_stacks["Stacks"]
+    ds_root --> ds_queues["Queues"]
+    ds_root --> ds_deques["Deques"]
+    ds_root --> ds_sets["Sets"]
+    ds_root --> ds_trees["Trees"]
+    ds_root --> ds_graphs["Graphs"]
+    ds_root --> ds_examples["Examples"]
 
-    B --> B1[Fixed Stack]
-    B --> B2[Linked Stack]
-    B --> B3[Resizable Stack]
+    ds_stacks --> stack_fixed["Fixed Stack"]
+    ds_stacks --> stack_linked["Linked Stack"]
+    ds_stacks --> stack_resizable["Resizable Stack"]
 
-    C --> C1[Circular Queue]
-    C --> C2[Linked Queue]
+    ds_queues --> queue_circular["Circular Queue"]
+    ds_queues --> queue_linked["Linked Queue"]
 
-    D --> D1[Bounded Deque]
-    D --> D2[Linked Deque]
+    ds_deques --> deque_bounded["Bounded Deque"]
+    ds_deques --> deque_linked["Linked Deque"]
 
-    E --> E1[Singly Linked Set]
-    E --> E2[Doubly Linked Set]
-    E --> E3[Ordered Dynamic Set]
+    ds_sets --> set_singly["Singly Linked Set"]
+    ds_sets --> set_doubly["Doubly Linked Set"]
+    ds_sets --> set_ordered["Ordered Dynamic Set"]
 
-    F --> F1[BST Dictionary]
-    F --> F2[AVL Dictionary]
+    ds_trees --> tree_bst["BST Dictionary"]
+    ds_trees --> tree_avl["AVL Dictionary"]
 
-    G --> G1[Adjacency List]
-    G --> G2[BFS]
-    G --> G3[Topological Sort]
+    ds_graphs --> graph_adj["Adjacency List"]
+    ds_graphs --> graph_bfs["BFS"]
+    ds_graphs --> graph_topological["Topological Sort"]
 
-    H --> H1[Expression Evaluation]
-    H --> H2[Graph Traversal]
-    H --> H3[Tree Removal]
+    ds_examples --> example_expression["Expression Evaluation"]
+    ds_examples --> example_traversal["Graph Traversal"]
+    ds_examples --> example_tree_removal["Tree Removal"]
 ```
 
 ---
@@ -296,17 +296,17 @@ Last In, First Out
 The last element inserted is the first one removed.
 
 ```mermaid
-flowchart TB
-    TOP["Top"]
-    N30["30"]
-    N20["20"]
-    N10["10"]
-    BOTTOM["Bottom"]
+graph TD
+    stack_top["Top"]
+    stack_30["30"]
+    stack_20["20"]
+    stack_10["10"]
+    stack_bottom["Bottom"]
 
-    TOP --> N30
-    N30 --> N20
-    N20 --> N10
-    N10 --> BOTTOM
+    stack_top --> stack_30
+    stack_30 --> stack_20
+    stack_20 --> stack_10
+    stack_10 --> stack_bottom
 ```
 
 In this repository, stacks appear in different forms:
@@ -322,10 +322,10 @@ In this repository, stacks appear in different forms:
 ### Stack Operations
 
 ```mermaid
-flowchart LR
-    A[push] --> B[Insert at top]
-    C[pop] --> D[Remove from top]
-    E[top] --> F[Read top element]
+graph LR
+    stack_push["push"] --> stack_insert_top["Insert at top"]
+    stack_pop["pop"] --> stack_remove_top["Remove from top"]
+    stack_peek["top"] --> stack_read_top["Read top element"]
 ```
 
 ### Stack Complexity
@@ -353,12 +353,12 @@ First In, First Out
 The first element inserted is the first one removed.
 
 ```mermaid
-flowchart LR
-    FRONT["Front"] --> N10["10"]
-    N10 --> N20["20"]
-    N20 --> N30["30"]
-    N30 --> N40["40"]
-    N40 --> BACK["Back"]
+graph LR
+    queue_front["Front"] --> queue_10["10"]
+    queue_10 --> queue_20["20"]
+    queue_20 --> queue_30["30"]
+    queue_30 --> queue_40["40"]
+    queue_40 --> queue_back["Back"]
 ```
 
 In this repository:
@@ -371,11 +371,11 @@ In this repository:
 ### Queue Operations
 
 ```mermaid
-flowchart LR
-    A[enqueue] --> B[Insert at back]
-    C[dequeue] --> D[Remove from front]
-    E[front] --> F[Read first element]
-    G[back] --> H[Read last element]
+graph LR
+    queue_enqueue["enqueue"] --> queue_insert_back["Insert at back"]
+    queue_dequeue["dequeue"] --> queue_remove_front["Remove from front"]
+    queue_front_op["front"] --> queue_read_front["Read first element"]
+    queue_back_op["back"] --> queue_read_back["Read last element"]
 ```
 
 ### Queue Complexity
@@ -397,19 +397,19 @@ The circular queue is more memory-local and efficient, while the linked queue gr
 A **deque**, or double-ended queue, allows insertion and removal from both ends.
 
 ```mermaid
-flowchart LR
-    FRONT["Front"]
-    A["10"]
-    B["20"]
-    C["30"]
-    D["40"]
-    BACK["Back"]
+graph LR
+    deque_front["Front"]
+    deque_10["10"]
+    deque_20["20"]
+    deque_30["30"]
+    deque_40["40"]
+    deque_back["Back"]
 
-    FRONT --- A
-    A <--> B
-    B <--> C
-    C <--> D
-    D --- BACK
+    deque_front --- deque_10
+    deque_10 --- deque_20
+    deque_20 --- deque_30
+    deque_30 --- deque_40
+    deque_40 --- deque_back
 ```
 
 In this repository:
@@ -422,13 +422,13 @@ In this repository:
 ### Deque Operations
 
 ```mermaid
-flowchart TD
-    A[Deque] --> B[push front]
-    A --> C[push back]
-    A --> D[pop front]
-    A --> E[pop back]
-    A --> F[front]
-    A --> G[back]
+graph TD
+    deque_root["Deque"] --> deque_push_front["push front"]
+    deque_root --> deque_push_back["push back"]
+    deque_root --> deque_pop_front["pop front"]
+    deque_root --> deque_pop_back["pop back"]
+    deque_root --> deque_front_op["front"]
+    deque_root --> deque_back_op["back"]
 ```
 
 ### Deque Complexity
@@ -452,12 +452,12 @@ A deque is useful when elements must be processed from both ends, such as in sli
 A **set** stores unique elements. The main idea is that repeated values or repeated keys should not be inserted.
 
 ```mermaid
-flowchart TD
-    SET["Set: unique elements"]
-    SET --> A["123456"]
-    SET --> B["282956"]
-    SET --> C["345678"]
-    SET --> D["396436"]
+graph TD
+    set_root["Set: unique elements"]
+    set_root --> set_123456["123456"]
+    set_root --> set_282956["282956"]
+    set_root --> set_345678["345678"]
+    set_root --> set_396436["396436"]
 ```
 
 In this repository:
@@ -471,11 +471,11 @@ In this repository:
 ### Ordered Dynamic Set
 
 ```mermaid
-flowchart LR
-    A["123456"] --> B["282956"]
-    B --> C["345678"]
-    C --> D["396436"]
-    D --> E["ordered by key"]
+graph LR
+    ordered_set_123456["123456"] --> ordered_set_282956["282956"]
+    ordered_set_282956 --> ordered_set_345678["345678"]
+    ordered_set_345678 --> ordered_set_396436["396436"]
+    ordered_set_396436 --> ordered_set_rule["ordered by key"]
 ```
 
 ### Set Complexity
@@ -500,21 +500,21 @@ left key < current key < right key
 ```
 
 ```mermaid
-flowchart TD
-    D["d: 6.23"]
-    B["b: 4.56"]
-    F["f: 7.80"]
-    A["a: 10.00"]
-    C["c: 6.70"]
-    E["e: 3.56"]
-    G["g: 7.89"]
+graph TD
+    bst_d["d: 6.23"]
+    bst_b["b: 4.56"]
+    bst_f["f: 7.80"]
+    bst_a["a: 10.00"]
+    bst_c["c: 6.70"]
+    bst_e["e: 3.56"]
+    bst_g["g: 7.89"]
 
-    D --> B
-    D --> F
-    B --> A
-    B --> C
-    F --> E
-    F --> G
+    bst_d --> bst_b
+    bst_d --> bst_f
+    bst_b --> bst_a
+    bst_b --> bst_c
+    bst_f --> bst_e
+    bst_f --> bst_g
 ```
 
 In this repository:
@@ -529,11 +529,11 @@ In this repository:
 A BST can become inefficient if it is not balanced.
 
 ```mermaid
-flowchart TD
-    N1["1"] --> N2["2"]
-    N2 --> N3["3"]
-    N3 --> N4["4"]
-    N4 --> N5["5"]
+graph TD
+    deg_bst_1["1"] --> deg_bst_2["2"]
+    deg_bst_2 --> deg_bst_3["3"]
+    deg_bst_3 --> deg_bst_4["4"]
+    deg_bst_4 --> deg_bst_5["5"]
 ```
 
 In this case, searching becomes $O(n)$.
@@ -555,21 +555,21 @@ In this case, searching becomes $O(n)$.
 An **AVL tree** is a self-balancing binary search tree. It keeps the height difference between left and right subtrees controlled.
 
 ```mermaid
-flowchart TD
-    N30["30"]
-    N20["20"]
-    N40["40"]
-    N10["10"]
-    N25["25"]
-    N35["35"]
-    N50["50"]
+graph TD
+    avl_30["30"]
+    avl_20["20"]
+    avl_40["40"]
+    avl_10["10"]
+    avl_25["25"]
+    avl_35["35"]
+    avl_50["50"]
 
-    N30 --> N20
-    N30 --> N40
-    N20 --> N10
-    N20 --> N25
-    N40 --> N35
-    N40 --> N50
+    avl_30 --> avl_20
+    avl_30 --> avl_40
+    avl_20 --> avl_10
+    avl_20 --> avl_25
+    avl_40 --> avl_35
+    avl_40 --> avl_50
 ```
 
 The balance factor of a node can be represented as:
@@ -594,9 +594,9 @@ In this repository:
 ### AVL Rotation Concept
 
 ```mermaid
-flowchart LR
-    A[Unbalanced subtree] --> B[Rotation]
-    B --> C[Balanced subtree]
+graph LR
+    avl_unbalanced["Unbalanced subtree"] --> avl_rotation["Rotation"]
+    avl_rotation --> avl_balanced["Balanced subtree"]
 ```
 
 ### AVL Complexity
@@ -632,11 +632,11 @@ where:
 In this project, the graph is represented using an **adjacency list**.
 
 ```mermaid
-flowchart LR
-    V0((0)) --> V1((1))
-    V0 --> V2((2))
-    V1 --> V3((3))
-    V2 --> V3
+graph LR
+    graph_v0(("0")) --> graph_v1(("1"))
+    graph_v0 --> graph_v2(("2"))
+    graph_v1 --> graph_v3(("3"))
+    graph_v2 --> graph_v3
 ```
 
 In this repository:
@@ -650,11 +650,11 @@ In this repository:
 ### Adjacency List Concept
 
 ```mermaid
-flowchart LR
-    A0["0"] --> A0L["1, 2"]
-    A1["1"] --> A1L["3"]
-    A2["2"] --> A2L["3"]
-    A3["3"] --> A3L["empty"]
+graph LR
+    adj_0["0"] --> adj_0_list["1, 2"]
+    adj_1["1"] --> adj_1_list["3"]
+    adj_2["2"] --> adj_2_list["3"]
+    adj_3["3"] --> adj_3_list["empty"]
 ```
 
 ### Graph Representation Complexity
@@ -673,32 +673,32 @@ The reusable graph structure uses **adjacency lists**, which are usually better 
 **BFS** visits vertices level by level using a queue.
 
 ```mermaid
-flowchart TD
-    S["Source: 0"]
-    L1A["Distance 1: 1"]
-    L1B["Distance 1: 2"]
-    L2A["Distance 2: 3"]
-    L2B["Distance 2: 4"]
-    L2C["Distance 2: 5"]
+graph TD
+    bfs_source["Source: 0"]
+    bfs_l1_a["Distance 1: 1"]
+    bfs_l1_b["Distance 1: 2"]
+    bfs_l2_a["Distance 2: 3"]
+    bfs_l2_b["Distance 2: 4"]
+    bfs_l2_c["Distance 2: 5"]
 
-    S --> L1A
-    S --> L1B
-    L1A --> L2A
-    L1A --> L2B
-    L1B --> L2C
+    bfs_source --> bfs_l1_a
+    bfs_source --> bfs_l1_b
+    bfs_l1_a --> bfs_l2_a
+    bfs_l1_a --> bfs_l2_b
+    bfs_l1_b --> bfs_l2_c
 ```
 
 ### BFS Flow
 
 ```mermaid
-flowchart LR
-    A[Choose source vertex] --> B[Enqueue source]
-    B --> C[Dequeue vertex]
-    C --> D[Visit unvisited neighbors]
-    D --> E[Enqueue neighbors]
-    E --> F{Queue empty?}
-    F -->|No| C
-    F -->|Yes| G[Finish BFS]
+graph LR
+    bfs_choose_source["Choose source vertex"] --> bfs_enqueue_source["Enqueue source"]
+    bfs_enqueue_source --> bfs_dequeue["Dequeue vertex"]
+    bfs_dequeue --> bfs_visit_neighbors["Visit unvisited neighbors"]
+    bfs_visit_neighbors --> bfs_enqueue_neighbors["Enqueue neighbors"]
+    bfs_enqueue_neighbors --> bfs_queue_empty{"Queue empty?"}
+    bfs_queue_empty -->|"No"| bfs_dequeue
+    bfs_queue_empty -->|"Yes"| bfs_finish["Finish BFS"]
 ```
 
 ### BFS Complexity
@@ -718,11 +718,11 @@ BFS is useful for finding the shortest number of edges between a source vertex a
 Topological sorting orders vertices of a directed acyclic graph so that every dependency appears before the element that depends on it.
 
 ```mermaid
-flowchart LR
-    V0((0)) --> V1((1))
-    V0 --> V2((2))
-    V1 --> V3((3))
-    V2 --> V3
+graph LR
+    topo_v0(("0")) --> topo_v1(("1"))
+    topo_v0 --> topo_v2(("2"))
+    topo_v1 --> topo_v3(("3"))
+    topo_v2 --> topo_v3
 ```
 
 One valid topological order is:
@@ -743,11 +743,11 @@ build systems
 ### Dependency Flow
 
 ```mermaid
-flowchart LR
-    A[Prerequisite] --> B[Task 1]
-    A --> C[Task 2]
-    B --> D[Final Task]
-    C --> D
+graph LR
+    dependency_prerequisite["Prerequisite"] --> dependency_task_1["Task 1"]
+    dependency_prerequisite --> dependency_task_2["Task 2"]
+    dependency_task_1 --> dependency_final["Final Task"]
+    dependency_task_2 --> dependency_final
 ```
 
 ### Topological Sort Complexity
@@ -779,25 +779,25 @@ one stack for operators
 ### Expression Evaluation Flow
 
 ```mermaid
-flowchart TD
-    A[Read token] --> B{Token type}
-    B -->|Number| C[Push into number stack]
-    B -->|Operator| D[Push into operator stack]
-    B -->|Closing parenthesis| E[Pop two numbers]
-    E --> F[Pop one operator]
-    F --> G[Compute partial result]
-    G --> H[Push result back]
+graph TD
+    expr_read_token["Read token"] --> expr_token_type{"Token type"}
+    expr_token_type -->|"Number"| expr_push_number["Push into number stack"]
+    expr_token_type -->|"Operator"| expr_push_operator["Push into operator stack"]
+    expr_token_type -->|"Closing parenthesis"| expr_pop_numbers["Pop two numbers"]
+    expr_pop_numbers --> expr_pop_operator["Pop one operator"]
+    expr_pop_operator --> expr_compute["Compute partial result"]
+    expr_compute --> expr_push_result["Push result back"]
 ```
 
 ### Two-Stack Model
 
 ```mermaid
-flowchart LR
-    T[Expression Tokens] --> N[Number Stack]
-    T --> O[Operator Stack]
-    N --> C[Computation]
-    O --> C
-    C --> R[Result]
+graph LR
+    expr_tokens["Expression Tokens"] --> expr_number_stack["Number Stack"]
+    expr_tokens --> expr_operator_stack["Operator Stack"]
+    expr_number_stack --> expr_computation["Computation"]
+    expr_operator_stack --> expr_computation
+    expr_computation --> expr_result["Result"]
 ```
 
 ### Expression Evaluator Complexity
