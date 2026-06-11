@@ -46,31 +46,6 @@ The goal of the project is not to build a production-ready inventory system. The
 
 ---
 
-## 🖼️ Illustrative Images
-
-### C Programming Language
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/C_Programming_Language.svg" alt="C Programming Language Logo" width="220">
-
-Image source: [Wikimedia Commons — C Programming Language.svg](https://commons.wikimedia.org/wiki/File:C_Programming_Language.svg)
-
----
-
-### Notebook / Laptop Inventory
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Laptop_Pinhead_icon.svg" alt="Laptop Icon" width="220">
-
-Image source: [Wikimedia Commons — Laptop Pinhead icon.svg](https://commons.wikimedia.org/wiki/File:Laptop_Pinhead_icon.svg)
-
----
-
-### Binary Persistence / Database Representation
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Database-icon.svg" alt="Database Icon" width="220">
-
-Image source: [Wikimedia Commons — Database-icon.svg](https://commons.wikimedia.org/wiki/File:Database-icon.svg)
-
----
 
 ## 🧭 Conceptual Map
 
