@@ -52,32 +52,6 @@ Each structure was written with educational clarity in mind, using explicit memo
 
 ---
 
-## 🖼️ Illustrative Images
-
-### Stack Data Structure
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Stack_%28data_structure%29.svg" alt="Stack Data Structure" width="360">
-
-Image source: [Wikimedia Commons — Stack (data structure).svg](https://commons.wikimedia.org/wiki/File:Stack_%28data_structure%29.svg)
-
----
-
-### Binary Search Tree
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Binary_search_tree.svg" alt="Binary Search Tree" width="420">
-
-Image source: [Wikimedia Commons — Binary search tree.svg](https://commons.wikimedia.org/wiki/File:Binary_search_tree.svg)
-
----
-
-### Directed Graph
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Graph_for_example_adjacency_matrix.svg" alt="Directed Graph Example" width="500">
-
-Image source: [Wikimedia Commons — Graph for example adjacency matrix.svg](https://commons.wikimedia.org/wiki/File:Graph_for_example_adjacency_matrix.svg)
-
----
-
 ## 🧭 Conceptual Map
 
 ```mermaid
