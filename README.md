@@ -31,32 +31,6 @@ Each folder contains its own dedicated `README.md` with more detailed explanatio
 
 ---
 
-## 🖼️ Illustrative Images
-
-### Finite State Machine
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Finite_State_Machine_diagram.jpg" alt="Finite State Machine Diagram" width="560">
-
-Image source: [Wikimedia Commons — Finite State Machine diagram.jpg](https://commons.wikimedia.org/wiki/File:Finite_State_Machine_diagram.jpg)
-
----
-
-### Queue Data Structure
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Data_Queue.svg" alt="Queue Data Structure" width="520">
-
-Image source: [Wikimedia Commons — Data Queue.svg](https://commons.wikimedia.org/wiki/File:Data_Queue.svg)
-
----
-
-### Ant Colony
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ant_colony_on_banana.jpg" alt="Ant Colony" width="460">
-
-Image source: [Wikimedia Commons — Ant colony on banana.jpg](https://commons.wikimedia.org/wiki/File:Ant_colony_on_banana.jpg)
-
----
-
 ## 🧭 Conceptual Map
 
 ```mermaid
@@ -127,6 +101,12 @@ Simple-Computing-Projects/
 
 A simple **Pygame-based state machine simulation** with multiple autonomous ants collecting leaves and bringing them back to a centralized base.
 
+The simulation is inspired by collective ant behavior: many small agents follow simple local rules, but together they can produce organized movement and resource collection.
+
+<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ant_colony_on_banana.jpg" alt="Ant colony on banana" width="460">
+
+Image source: [Wikimedia Commons — Ant colony on banana.jpg](https://commons.wikimedia.org/wiki/File:Ant_colony_on_banana.jpg)
+
 This project demonstrates how simple rules can generate organized behavior in a simulation.
 
 ### Main Concepts
@@ -151,7 +131,13 @@ In the `SEARCH` state, the ant moves toward a leaf.
 
 In the `BRING` state, the ant carries the leaf back to the central base.
 
-A simplified state transition diagram:
+A finite state machine is useful here because the ant only needs to know its current state and the event that triggers the next transition. The image below shows the same general idea in a broader state-machine model.
+
+<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Finite_State_Machine_diagram.jpg" alt="Finite state machine diagram" width="560">
+
+Image source: [Wikimedia Commons — Finite State Machine diagram.jpg](https://commons.wikimedia.org/wiki/File:Finite_State_Machine_diagram.jpg)
+
+A simplified state transition diagram for this project:
 
 ```mermaid
 stateDiagram-v2
@@ -242,6 +228,12 @@ Binary Search Trees
 AVL Trees
 Graphs
 ```
+
+Queues are especially important in this repository because they connect the abstract data structure to practical graph traversal algorithms such as BFS. In a queue, the first element inserted is the first one removed.
+
+<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Data_Queue.svg" alt="Queue data structure" width="520">
+
+Image source: [Wikimedia Commons — Data Queue.svg](https://commons.wikimedia.org/wiki/File:Data_Queue.svg)
 
 ### Included Algorithms and Examples
 
