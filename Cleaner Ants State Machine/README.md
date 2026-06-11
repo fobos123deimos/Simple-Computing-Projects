@@ -19,6 +19,15 @@ This project explores the use of **finite state machines**, **2D vector movement
 
 The simulation contains **20 autonomous ants** moving inside a 2D Pygame window.
 
+<p align="center">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ant_on_the_wall.jpg" alt="Ant on the wall" width="420">
+</p>
+
+<p align="center">
+  <em>Ant reference image: <a href="https://commons.wikimedia.org/wiki/File:Ant_on_the_wall.jpg">Wikimedia Commons — Ant on the wall.jpg</a></em>
+</p>
+
+
 Each ant has its own target leaf and follows a simple behavior cycle:
 
 ```text
@@ -35,32 +44,6 @@ The behavior works as follows:
 This creates a continuous simulation of multiple agents collecting objects and returning them to a shared location.
 
 The project is intentionally simple and educational. It is useful for studying how small local rules can generate visible agent behavior in a simulation.
-
----
-
-## 🖼️ Illustrative Images
-
-### Finite State Machine
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Finite-state_machine_state-diagram.png" alt="Finite State Machine Diagram" width="520">
-
-Image source: [Wikimedia Commons — Finite-state machine state-diagram.png](https://commons.wikimedia.org/wiki/File:Finite-state_machine_state-diagram.png)
-
----
-
-### Vector Addition
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Vector-addition-and-scaling.svg" alt="Vector Addition and Scaling" width="520">
-
-Image source: [Wikimedia Commons — Vector-addition-and-scaling.svg](https://commons.wikimedia.org/wiki/File:Vector-addition-and-scaling.svg)
-
----
-
-### Ant Reference Image
-
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ant_on_the_wall.jpg" alt="Ant on the wall" width="420">
-
-Image source: [Wikimedia Commons — Ant on the wall.jpg](https://commons.wikimedia.org/wiki/File:Ant_on_the_wall.jpg)
 
 ---
 
@@ -149,6 +132,15 @@ Real-Time Rendering
 ## 🧭 Finite State Machine
 
 A finite state machine is a computational model where an entity can be in one state at a time and switch to another state based on specific conditions.
+
+<p align="center">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Finite-state_machine_state-diagram.png" alt="Finite State Machine Diagram" width="520">
+</p>
+
+<p align="center">
+  <em>Finite state machine reference: <a href="https://commons.wikimedia.org/wiki/File:Finite-state_machine_state-diagram.png">Wikimedia Commons — Finite-state machine state-diagram.png</a></em>
+</p>
+
 
 In this project, each ant uses two main states:
 
@@ -283,6 +275,14 @@ The simulation uses a custom `Vector2D` class to represent:
 - Distance
 - Movement
 - Vector arithmetic
+
+<p align="center">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Vector-addition-and-scaling.svg" alt="Vector Addition and Scaling" width="520">
+</p>
+
+<p align="center">
+  <em>Vector addition reference: <a href="https://commons.wikimedia.org/wiki/File:Vector-addition-and-scaling.svg">Wikimedia Commons — Vector-addition-and-scaling.svg</a></em>
+</p>
 
 Each ant moves by calculating the direction between its current position and its target position.
 
